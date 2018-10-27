@@ -1,0 +1,39 @@
+﻿rcirs187:/var/pcenter/infa_shared/Cache>du -g .
+133.40  ./APP_OASYS
+438.04  ./APP_ORCI  62
+11.93   ./APP_HW_IBRO
+42.56   ./APP_CDD
+324.21  ./APP_MRKT_SASCI   73 now
+102.90  ./APP_RB
+13.61   ./APP_COMPASS
+213.50  ./GCDM_EXA/BIDW_CMP   - 213
+2.05    ./ODS_RBS_ISERIES
+374.12  ./ODS_V21
+
+
+
+find /var/pcenter/infa_shared/Cache/APP_ORCI -name 'PM*' -mtime +2 -exec rm -f '{}' \;
+find /tmp -name '*' -mtime +10 -exec rm -f '{}' \;
+/var/pcenter/infa_shared/SrcFiles/ELA_MLBAM/conviva_daily_session_log_20161108_0435.txt
+
+find /var/pcenter/infa_shared/Cache/GCDM_EXA/BIDW_CMP* -mtime +5 -exec del {} \;
+
+find /var/pcenter/infa_shared/Cache/ODIN_EXA/BIDW_V21_CORE -name 'PM*' -mtime +60 -exec rm -f '{}' \;
+
+ls -l | awk '{if ($5 > 200) print $8}'
+
+ls -l | awk '{if ($5 > 2147483646) print $8}'
+
+du -a . | awk '$1*512 > 2147483648 {print $2}'
+
+
+find /var/pcenter/infa_shared/Cache/GCDM_EXA/BIDW_CMP -name 'PMLKUP*' -mtime +5 -exec rm -f '{}' \;
+find /tmp -name '*' -mtime +10 -exec rm -f '{}' \;
+/var/pcenter/infa_shared/SrcFiles/ELA_MLBAM/conviva_daily_session_log_20161108_0435.txt
+
+find /var/pcenter/infa_shared/Cache/GCDM_EXA/BIDW_CMP* -mtime +5 -exec del {} \;
+
+find /var/pcenter/infa_shared/Cache/ODIN_EXA/BIDW_V21_CORE -name 'PM*' -mtime +60 -exec rm -f '{}' \;
+
+
+

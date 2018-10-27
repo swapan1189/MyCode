@@ -1,0 +1,10 @@
+SELECT cmobjprops1.cmid, cmobjprops1.busphone, cmobjprops1.email,
+          cmobjprops1.faxphone, cmobjprops1.givenname, cmobjprops1.homephone,
+          cmobjprops1.mobilephone, cmobjprops1.pagerphone,
+          cmobjprops1.paddress, cmobjprops1.surname, cmobjprops1.TIMEZONE,
+          cmobjprops1.clocaleid, cmobjprops1.prodlocale, cmobjprops1.objid,
+          cmobjprops1.useaccessibility, cmobjprops33.cmid AS cmid1,
+          UPPER (cmobjprops33.NAME)
+     FROM cmobjprops1, cmobjprops33
+    WHERE cmobjprops1.cmid = cmobjprops33.cmid and
+    UPPER (cmobjprops33.NAME) not like '%DELETE%'

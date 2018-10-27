@@ -1,0 +1,10 @@
+select ob2.cmid, 
+c.name as className, 
+n.name as objectName 
+from CMOBJPROPS2 p 
+inner join CMOBJPROPS26 o on p.cmid=o.cmid 
+inner join CMOBJECTS ob on ob.cmid=o.cmid 
+inner join CMOBJECTS ob2 on ob.pcmid=ob2.cmid 
+inner join CMOBJNAMES n on n.cmid=ob2.cmid 
+inner join CMCLASSES c on ob2.classid=c.classid 
+where p.active = 1

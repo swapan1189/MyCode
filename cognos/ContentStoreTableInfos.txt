@@ -1,0 +1,41 @@
+Some of the information are in audit table if you set up logging to audit database.
+
+If you want to go against content store, check below.
+There are several new added in Cognos 10 for human task and other services besides the tables below.
+
+Cognos Content Store Database Tables Table name Descrition
+CMSYSPROPS This table has the Content Store Version. 
+CMOBJNAMES This table has the names of all the objects in the content store. 
+CMOBJPROPS1 Users, Roles \ Group Distribution list and contact information such as Email, phone number, Fax Given name etc are stored in this table 
+CMOBJPROPS2 Report scheduling information is stored. This table has fields like hour, day week etc 
+CMOBJPROPS3 Stores Screen Tip and Object description provided while creating the objects are stored here 
+CMOBJPROPS4 Stores the printer paper setting details like height and width of A3 , A4 , letter and 11X17 paper orientations 
+CMOBJPROPS6 Has the details of the all packages which were published using the FM. 
+CMOBJPROPS7 This table stores the XML of all reports and models. This is basically to maintain the metadata about the structure of the reports and models. 
+CMOBJPROPS10 Contact information is stored in this table. This table has columns like Contact Email and Contact. 
+CMOBJPROPS11 This table stores the data sources configuration details like connect string, the cube location etc. 
+CMOBJPROPS13 It stores the names of parameter passed to the range prompts.
+The binary value in CPARMVALUE is XML compressed with gzip. 
+CMOBJPROPS14 Has details regarding the versions, creation time etc of the objects in the content store. 
+CMOBJPROPS16 This table provides the status of the multiple services of Cognos like LogService, MonitorService, ReportService, SystemService, JobService 
+CMOBJPROPS17 Stores performance details of each component like “query Studio, Analysis Studio, Event Studio” etc 
+CMOBJPROPS18 This table stores the drill path from the source to the final target report. 
+CMOBJPROPS20 Stores details regarding which are all the reports for which prompting has been enabled. And also has the details of which are the reports which has the default report options overridden. 
+CMOBJPROPS24 Stores the printer configuration details 
+CMOBJPROPS25 Stores the data regarding the objects deployed, like the deployed folder, the reports, the number of folders present in the deployment archive, etc 
+CMOBJPROPS26 This table stores the data about all the packages imported / exported in C8, with the properties selected during the process. 
+CMOBJPROPS27 Has the details regarding the data source created in the content store using Cubes. 
+CMOBJPROPS30 Stores the registration , service description etc details about portlets in this table 
+CMOBJPROPS31 Has the custom logging level for each of the Cognos services, CMID can be be linked to CMOBJNAMES for the names of each of the services 
+CMOBJPROPS32 Has the details of the stored procedures used as the query items in the FM model. 
+CMOBJPROPS33 Detail related to users, user groups user roles. 
+CMOBJPROPS34 Has the details regarding the drill through parameters of the drill through reports. The parameter assign values are present in coded format 
+CMOBJPROPS36 Has the list of all the Models published using framework manager 
+CMOBJPROPS37 This table has the details of the routing sets configured for server / load balancing for each package published in the content store 
+CMOBJPROPS38 Configuration details about number of items to retrieve in studios, for a package are saved under this table. 
+CMOBJPROPS39 Has values for properties of reports and views. PROPID can be linked to CMPROPERTIES for property names 
+CMOBJPROPS52 Contains the properties for the connections 
+CMOBJPROPS55 Has the URI for icons for each entry in Cognos Connection 
+CMLOCALES Has the locale ids associated with each language supported by Cognos 8 
+
+It is not a good idea to query content store directly due to performance concerns.

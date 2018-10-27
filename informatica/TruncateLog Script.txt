@@ -1,0 +1,42 @@
+#!/usr/bin/perl -w
+
+# This script truncates all repository logs older than the date specified
+
+use strict;
+use POSIX qw(strftime);
+
+my $domain="DOM_ENT_PROD";
+#my $repository="RS_BIDW_PROD";
+my $repository="RS_EDP_BIDW_PROD";
+my $repository_user="InfaMaintAdmin";
+my $repository_user_security_domain="Native"; # Used for LDAP installations. Default is "native".
+
+my $retention=40;  ##### RETAIN THE LAST 40 DAYS OF LOGS
+#my $retention=180;  ##### RETAIN THE LAST 180 DAYS OF LOGS
+
+# Connect to repository
+my $result=`pmrep connect -d $domain -r $repository -n $repository_user -s $repository_user_security_domain -X PASSWORD`;
+my $connectresult=$?;
+print "$result\n";
+if ($connectresult != 0)
+{
+    die ("Could not connect to $repository\n");
+}
+
+# Truncate all "details" from the repository, keep the last $retention days
+$result=`pmrep truncatelog -t $retention`;
+my $truncresult=$?;
+print "$result\n";
+if ($truncresult != 0)
+{
+    die ("Could not trucate $repository logs\n");
+}
+
+# Clean up connections and exit
+$result=`pmrep cleanup`;
+my $cleanupresult=$?;
+print "$result\n";
+if ($connectresult != 0)
+{
+    die ("Could not clean up\n");
+}

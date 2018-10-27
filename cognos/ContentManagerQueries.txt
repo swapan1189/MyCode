@@ -1,0 +1,116 @@
+If you are using Oracle as content store DB
+
+here are some homemade select that could give you some information
+
+list of users
+
+SELECT cmobjprops1.cmid, cmobjprops1.busphone, cmobjprops1.email,
+          cmobjprops1.faxphone, cmobjprops1.givenname, cmobjprops1.homephone,
+          cmobjprops1.mobilephone, cmobjprops1.pagerphone,
+          cmobjprops1.paddress, cmobjprops1.surname, cmobjprops1.TIMEZONE,
+          cmobjprops1.clocaleid, cmobjprops1.prodlocale, cmobjprops1.objid,
+          cmobjprops1.useaccessibility, cmobjprops33.cmid AS cmid1,
+          UPPER (cmobjprops33.NAME)
+     FROM cmobjprops1, cmobjprops33
+    WHERE cmobjprops1.cmid = cmobjprops33.cmid
+
+List of Groups (List of English groups)
+
+SELECT cmobjnames_base.cmid, cmobjects.pcmid, UPPER (cmobjnames_base.NAME),
+          cmobjects.created, cmobjects.modified, cmobjects.disabled,
+          cmobjnames_base.isdefault
+     FROM cmobjects, cmobjnames_base
+    WHERE cmobjects.classid IN (26, 54)
+      AND cmobjnames_base.mapdlocaleid = 24
+      AND cmobjects.cmid = cmobjnames_base.cmid
+
+List of users by group
+
+SELECT   v_group_user.user_id, v_user.ldap_id,
+            LTRIM (RTRIM (UPPER (v_user.ldap_id))), v_group.cmid,
+            v_group.name_en name_en, v_group.name_fr name_fr, v_group.created,
+            v_group.modified, v_group.disabled, v_user.last_name,
+            v_user.first_name, v_user.email
+       FROM dba_group_info v_group,
+            (SELECT cmid GROUP_ID, refcmid user_id
+               FROM ops$cgs.cmreford1) v_group_user,
+            (SELECT c33.cmid user_id, UPPER (c33.NAME) ldap_id,
+                    c1.surname last_name, c1.givenname first_name,
+                    c1.email email
+               FROM cmobjprops1 c1, cmobjprops33 c33
+              WHERE c33.cmid = c1.cmid(+)
+             UNION
+             SELECT cmid user_id, UPPER (name_en) ldap_id, name_en last_name,
+                    '' first_name, '' email
+               FROM dba_group_info) v_user
+      WHERE v_group.cmid = v_group_user.GROUP_ID
+            AND v_group_user.user_id = v_user.user_id(+)
+   ORDER BY 1, 3
+
+I hope this will help you
+
+
+
+
+Modified the query a little bit to make it work if the Content Store is in SQL Server  :D
+
+SELECT v_user.first_name, v_user.last_name, v_group.name, v_group_user.cmid as GROUP_ID, 
+   v_group_user.refcmid user_id FROM cmreford1 as v_group_user 
+LEFT OUTER JOIN (SELECT c33.cmid user_id, UPPER (c33.NAME) ldap_id,c1.surname last_name, c1.givenname first_name,c1.email email
+      FROM cmobjprops1 c1 left outer join  cmobjprops33 c33              
+      on c33.cmid = c1.cmid
+      UNION
+      SELECT cmobjprops1.cmid user_id, UPPER (cmobjprops33.NAME) ldap_id, cmobjprops1.surname last_name, cmobjprops1.givenname first_name, cmobjprops1.email
+      FROM cmobjprops1, cmobjprops33
+      WHERE cmobjprops1.cmid = cmobjprops33.cmid) v_user 
+ON v_group_user.refcmid = v_user.user_id
+LEFT OUTER JOIN (SELECT cmobjnames.cmid cmid, UPPER (cmobjnames.NAME) name,
+             cmobjects.created created, cmobjects.modified modified, cmobjects.disabled disabled
+           FROM cmobjects, cmobjnames
+          WHERE cmobjects.classid IN (26, 54)
+            AND cmobjnames.mapdlocaleid = 24
+            AND cmobjects.cmid = cmobjnames.cmid) v_group 
+ON v_group.cmid = v_group_user.cmid
+WHERE v_user.first_name = INSERT FIRST NAME HERE
+OR v_user.last_name = INSERT LAST NAME HERE
+OR v_group.name = ENTER GROUP NAME HERE
+
+
+
+
+
+
+
+SELECT     CMOBJNAMES.NAME AS ObjName, CMOBJECTS.PCMID, CMCLASSES.NAME AS ClassName, CMOBJPROPS7.spec
+FROM       CMOBJECTS 
+JOIN       CMOBJNAMES ON CMOBJECTS.CMID    = CMOBJNAMES.CMID
+JOIN       CMCLASSES       ON CMOBJECTS.CLASSID = CMCLASSES.CLASSID
+LEFT JOIN  CMOBJPROPS7     ON CMOBJECTS.CMID = CMOBJPROPS7.CMID
+WHERE     CMOBJECTS.CLASSID IN (10, 37)
+ORDER BY CMOBJECTS.PCMID;
+
+select * from CMOBJECTS
+select * from CMOBJPROPS2 where URI is NOT Null
+
+SELECT     CMOBJNAMES.NAME AS ObjName, CMOBJECTS.PCMID, CMCLASSES.NAME AS ClassName
+FROM       CMOBJECTS 
+JOIN       CMOBJNAMES ON CMOBJECTS.CMID    = CMOBJNAMES.CMID
+JOIN       CMCLASSES       ON CMOBJECTS.CLASSID = CMCLASSES.CLASSID
+LEFT JOIN  CMOBJPROPS6     ON CMOBJECTS.CMID = CMOBJPROPS6.CMID
+WHERE     CMOBJECTS.CLASSID IN (10, 37) and CMCLASSES.NAME = 'package'
+ORDER BY CMOBJECTS.PCMID;
+
+SELECT     CMOBJNAMES.NAME AS ObjName, CMOBJECTS.PCMID
+from CMOBJECTS 
+JOIN       CMOBJNAMES ON CMOBJECTS.CMID    = CMOBJNAMES.CMID
+LEFT JOIN CMOBJPRPS2     ON CMOBJECTS.CMID = CMOBJPROPS2.CMID
+
+Total number of reports
+select a.name, b.name
+from cmobjprops33 a, cmobjnames b, cmrefnoord2 c, cmobjects d, cmclasses e
+where b.cmid = c.cmid
+and a.cmid = c.refcmid
+and b.cmid = d.cmid
+and d.classid = e.classid
+and e.name = 'report'
+
