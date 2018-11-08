@@ -1,0 +1,10 @@
+--https://www.hackerrank.com/challenges/contest-leaderboard/
+
+with cte1 as (
+select challenge_id, hacker_id, max(score) max_score from submissions group by challenge_id,hacker_id
+)
+select a.hacker_id, name, sum(max_score)  as "total score" from hackers a, cte1 b
+where a.hacker_id = b.hacker_id
+group by a.hacker_id, name
+having sum(max_score) <> 0
+order by sum(max_score) desc, hacker_id;
