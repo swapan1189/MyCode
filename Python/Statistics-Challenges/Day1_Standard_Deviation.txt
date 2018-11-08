@@ -1,0 +1,29 @@
+#https://www.hackerrank.com/challenges/s10-standard-deviation
+
+# Enter your code here. Read input from STDIN. Print output to STDOUT
+import math
+n = raw_input()
+elements = raw_input()
+
+int_elements = []
+for i in elements.split(' '):
+    int_elements.append(int(i))
+    
+sorted_elements = sorted(int_elements)
+len_array = len(int_elements)
+
+sum_of_elements = sum(int_elements)
+mean = sum_of_elements/float(n)
+#print len_array
+sum_of_square = 0
+square = 0
+for i in range(len_array):
+    square = (mean - sorted_elements[i])
+    square = square*square
+    sum_of_square = sum_of_square+square
+    
+
+Variance = (sum_of_square/len_array)
+SD = round(math.sqrt(Variance),1)
+print SD
+    

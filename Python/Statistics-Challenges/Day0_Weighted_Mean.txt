@@ -1,0 +1,25 @@
+#https://www.hackerrank.com/challenges/s10-weighted-mean
+
+# Enter your code here. Read input from STDIN. Print output to STDOUT
+n = raw_input()
+elements1 = raw_input()
+elements2 = raw_input()
+
+int_elements1 = []
+int_elements2 = []
+
+for i in elements1.split(' '):
+    int_elements1.append(int(i))
+    
+for i in elements2.split(' '):
+    int_elements2.append(int(i))
+
+Total_Weight = sum(int_elements2)
+
+sum = 0
+for i in range(int(n)):
+    sum = sum + int_elements1[i]*int_elements2[i]
+
+Weighted_Mean = sum/float(Total_Weight)
+
+print round(Weighted_Mean, 1)

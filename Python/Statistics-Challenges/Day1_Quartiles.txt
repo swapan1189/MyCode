@@ -1,0 +1,35 @@
+#https://www.hackerrank.com/challenges/s10-quartiles
+
+# Enter your code here. Read input from STDIN. Print output to STDOUT
+n = raw_input()
+elements = raw_input()
+
+int_elements = []
+for i in elements.split(' '):
+    int_elements.append(int(i))
+    
+sorted_elements = sorted(int_elements)
+len_array = len(int_elements)
+
+if (len_array) % 2 == 1:
+    lower_half = sorted_elements[0:(len_array)//2]
+    upper_half = sorted_elements[((len_array)//2)+1:]
+    #Median_element = sorted_elements[len_array/2]
+else:
+    lower_half = sorted_elements[0:((len_array)//2)]
+    upper_half = sorted_elements[((len_array)//2):]
+    #Median_element = (sorted_elements[(len_array/2)-1] + sorted_elements[(len_array)/2]) /2
+
+def median(my_list):
+    index = len(my_list) // 2
+    
+    if len(my_list) % 2 != 0:
+        return my_list[index]
+    
+    return (my_list[index] + my_list[index-1]) / 2    
+    
+print median(lower_half)
+print median(sorted_elements)
+print median(upper_half)
+  
+

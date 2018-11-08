@@ -1,0 +1,48 @@
+https://www.hackerrank.com/challenges/s10-interquartile-range/
+
+# Enter your code here. Read input from STDIN. Print output to STDOUT
+n = raw_input()
+elements = raw_input()
+frequency = raw_input()
+
+int_elements = []
+for i in elements.split(' '):
+    int_elements.append(int(i))
+    
+int_frequency = []
+for i in frequency.split(' '):
+    int_frequency.append(int(i))
+    
+final_list = []
+z = -1
+for i in int_frequency:
+    z = z+1
+    for x in range(i):
+        final_list.append(int_elements[z])
+
+sorted_elements = sorted(final_list)
+
+len_array = len(sorted_elements)
+
+if (len_array) % 2 == 1:
+    lower_half = sorted_elements[0:(len_array)//2]
+    upper_half = sorted_elements[((len_array)//2)+1:]
+    #Median_element = sorted_elements[len_array/2]
+else:
+    lower_half = sorted_elements[0:((len_array)//2)]
+    upper_half = sorted_elements[((len_array)//2):]
+    #Median_element = (sorted_elements[(len_array/2)-1] + sorted_elements[(len_array)/2]) /2
+
+def median(my_list):
+    index = len(my_list) // 2
+    
+    if len(my_list) % 2 != 0:
+        return my_list[index]
+    
+    return (my_list[index] + my_list[index-1]) / 2    
+    
+Q1 = median(lower_half)
+#print median(sorted_elements)
+Q3 = median(upper_half)
+
+print float(Q3 - Q1)
