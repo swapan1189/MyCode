@@ -1,0 +1,7 @@
+-- Asian Population
+-- https://www.hackerrank.com/challenges/asian-population/problem
+
+select sum(a.population) from CITY a, Country b
+where 
+a.CountryCode = b.Code
+and b.continent = 'Asia';
