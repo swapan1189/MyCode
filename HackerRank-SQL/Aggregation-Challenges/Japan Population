@@ -1,0 +1,4 @@
+--https://www.hackerrank.com/challenges/japan-population
+
+select sum(population) from CITY
+where COUNTRYCODE = 'JPN';
