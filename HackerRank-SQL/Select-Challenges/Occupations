@@ -1,0 +1,14 @@
+--https://www.hackerrank.com/challenges/occupations
+
+/*
+Enter your query here.
+Please append a semicolon ";" at the end of the query and enter your query in a single line to avoid error.
+*/
+
+select doc.name, prof.name, sing.name, act.name
+from
+(((select name, row_number() over(order by name) n from occupations where lower(occupation)='doctor' order by name) doc full outer join
+(select name, row_number() over(order by name) n from occupations where lower(occupation)='singer') sing on doc.n=sing.n) full outer join
+(select name, row_number() over(order by name) n from occupations where lower(occupation)='actor') act on sing.n=act.n) full outer join
+(select name, row_number() over(order by name) n from occupations where lower(occupation)='professor') prof on act.n=prof.n
+order by doc.n, sing.n, act.n,prof.n;
