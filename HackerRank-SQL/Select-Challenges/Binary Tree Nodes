@@ -1,0 +1,7 @@
+--https://www.hackerrank.com/challenges/binary-search-tree-1
+
+select N, case when P is NULL then 'Root'
+when N NOT IN (Select P from BST where P IS NOT NULL) then 'Leaf'
+else 'Inner'
+End
+from BST order by N;
