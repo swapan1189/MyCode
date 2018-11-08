@@ -1,0 +1,12 @@
+
+-- The Report
+-- https://www.hackerrank.com/challenges/the-report/problem
+
+select 
+case when b.grade >=8 then a.name
+else NULL
+END
+, b.grade, a.marks from 
+Students a, Grades b
+where a.marks between b.min_mark and b.max_mark 
+order by b.grade desc, a.name;
