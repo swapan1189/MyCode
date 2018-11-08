@@ -1,0 +1,15 @@
+--https://www.hackerrank.com/challenges/the-company/
+
+select company.company_code, company.founder, l1.ct, s1.ct, m1.ct, e1.ct
+from
+company,
+(select company_code,count(distinct lead_manager_code) ct from lead_manager group by company_code) l1,
+(select company_code,count(distinct senior_manager_code) ct from senior_manager group by company_code) s1,
+(select company_code,count(distinct manager_code) ct from manager group by company_code) m1,
+(select company_code,count(distinct employee_code) ct from employee group by company_code) e1
+where
+company.company_code=l1.company_code and
+company.company_code=m1.company_code and
+company.company_code=s1.company_code and
+company.company_code=e1.company_code 
+order by company_code;
